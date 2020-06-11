@@ -1,0 +1,15 @@
+.preloader{
+    width: 70px;
+    height: 70px;
+}
+
+.pageNumber{
+    border: black solid 1px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.currentPage{
+    font-weight: bold;
+}
