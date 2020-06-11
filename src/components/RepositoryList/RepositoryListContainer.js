@@ -21,9 +21,9 @@ const mapStateToProps = (state) => {
 
 class RepositoryListContainer extends React.Component {
 
-    componentDidMount() {
-        this.props.getRepositories(this.props.pageSize, 1);
-    }
+    // componentDidMount() {
+    //     this.props.getRepositories(this.props.pageSize, 1);
+    // }
 
     //сюда еще будут приходить опции для поиска от пользователя
     onPageNumClick = (pageNum) => {
