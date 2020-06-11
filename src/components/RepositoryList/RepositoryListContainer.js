@@ -1,6 +1,7 @@
 import {
     getRepositories,
     setCurrentPage,
+    setSearchText
 } from "../../redux/repository-list-reducer";
 
 import RepositoryList from "./RepositoryList";
@@ -15,6 +16,7 @@ const mapStateToProps = (state) => {
         totalRepositories: state.repositoryList.totalRepositories,
         pageSize: state.repositoryList.pageSize,
         isFetching: state.repositoryList.isFetching,
+        searchText: state.repositoryList.searchText
     }
 }
 
@@ -27,15 +29,16 @@ class RepositoryListContainer extends React.Component {
 
     //сюда еще будут приходить опции для поиска от пользователя
     onPageNumClick = (pageNum) => {
-        this.props.getRepositories(this.props.pageSize, pageNum)
+        this.props.getRepositories(this.props.pageSize, pageNum, this.props.searchText)
     }
 
 
     render() {
         return <RepositoryList totalRepositories={this.props.totalRepositories} repositories={this.props.repositories}
             onPageNumClick={this.onPageNumClick} pageSize={this.props.pageSize} currentPage={this.props.currentPage}
-        isFetching={this.props.isFetching}/>
+        isFetching={this.props.isFetching} setSearchText={this.props.setSearchText} getRepositories={this.props.getRepositories}
+        setCurrentPage={this.props.setCurrentPage} searchText={this.props.searchText}/>
     }
 }
 
-export default connect(mapStateToProps, {getRepositories, setCurrentPage})(RepositoryListContainer)
+export default connect(mapStateToProps, {getRepositories, setCurrentPage, setSearchText})(RepositoryListContainer)

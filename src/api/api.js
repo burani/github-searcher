@@ -6,7 +6,7 @@ const instance = axios.create({
 
 export const repositoryApi = {
     //дефолтные параметры будут заменены при запросе.
-    getRepositories(pageSize = 10, currentPage = 1, queryParameters = "tetris+language:assembly") {
+    getRepositories(pageSize = 10, currentPage = 1, queryParameters = "stars:>=15000") {
         return instance.get(`search/repositories?page=${currentPage}&per_page=${pageSize}&q=${queryParameters}&sort=stars&order=desc`)
             .then(response => {
                 return response.data;

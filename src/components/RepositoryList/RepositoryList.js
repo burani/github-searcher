@@ -11,11 +11,26 @@ const RepositoryList = (props) => {
         pages.push(i);
     }
 
+    const onUpdateSearchText = (e) => {
+        props.setSearchText(e.target.value);
+    };
+    const onButtonClick = (e) => {
+        props.setCurrentPage(1);
+        props.getRepositories(10, 1, props.searchText)
+
+    };
+
+
+
+
     //в стейт надо добавить инпут, как-то надо брать из инпута значение когда мы кликаем на кнопку.
+
+    //в input при инициализации приходит пустой стейт, но он на самом деле сохраняется. Оставлю как фичу)))
     return (
         <div>
             <div>
-                <button onClick={props.getRepositories}>Search</button>
+                <input onChange={onUpdateSearchText} value={props.searchText} placeholder={"Enter search text"}></input>
+                <button onClick={onButtonClick}>Search</button>
             </div>
 
             <div>

@@ -6,6 +6,7 @@ let initialState = {
     pageSize: 10,//потому что будем показывать 10 репозиториев
     totalRepositories: 0,
     isFetching: false,
+    searchText: ''
 };
 
 const repositoryListReducer = (state = initialState, action) => {
@@ -42,6 +43,13 @@ const repositoryListReducer = (state = initialState, action) => {
             }
         }
 
+        case 'SET-SEARCH-TEXT': {
+            return {
+                ...state,
+                searchText: action.searchText
+            }
+        }
+
         default:
             return state;
 
@@ -53,16 +61,27 @@ export const setRepositories = (repositories) => ({type: 'SET-REPOS', repositori
 export const setTotalRepositories = (totalRepositories) => ({type: 'SET-TOTAL-REPOS', totalRepositories});
 export const setCurrentPage = (currentPage) => ({type: 'SET-CURRENT-PAGE', currentPage});
 export const setFetching = (isFetching) => ({type: 'SET-IS-FETCHING', isFetching});
+export const setSearchText = (searchText) => ({type: 'SET-SEARCH-TEXT', searchText});
+
+
+const changeSearchText = (searchText) => {
+    const safeSearchText = searchText.replace(/[^a-zA-Z0-9 ]/g, "");//убираем все ненужные символы из строки.
+    if (safeSearchText != ""){
+        return safeSearchText.split(' ').join('+');
+    }
+    return undefined
+}
+
 
 //thunk-creators
-export const getRepositories = (pageSize, currentPage) => {
+export const getRepositories = (pageSize, currentPage, searchText) => {
     return (dispatch) => {
         dispatch(setFetching(true));
         dispatch(setCurrentPage(currentPage));
-        repositoryApi.getRepositories(pageSize, currentPage).then(response => {
+        repositoryApi.getRepositories(pageSize, currentPage, changeSearchText(searchText)).then(response => {
+            debugger;
             dispatch(setFetching(false));
-            dispatch(setRepositories(response.items));//это надо будет как-то упростить, чтобы каждый элемент массива содержал только 4 свойства.
-            //упрощать скорее всего с помощью map или reduce
+            dispatch(setRepositories(response.items));
             dispatch(setTotalRepositories(response.total_count));
         })
     }
