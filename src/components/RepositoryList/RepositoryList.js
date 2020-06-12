@@ -1,6 +1,7 @@
 import React from "react";
 import s from "./repository-list.module.css";
 import Preloader from "./Preloader";
+import {NavLink} from "react-router-dom";
 
 const RepositoryList = (props) => {
     let pages = [];
@@ -21,50 +22,51 @@ const RepositoryList = (props) => {
     };
 
 
-
-
     //в стейт надо добавить инпут, как-то надо брать из инпута значение когда мы кликаем на кнопку.
 
     //в input при инициализации приходит пустой стейт, но он на самом деле сохраняется. Оставлю как фичу)))
     return (
-        <div>
-            <div>
+        <div className={s.componentContainer}>
+            <div className={s.searchContainer}>
                 <input onChange={onUpdateSearchText} value={props.searchText} placeholder={"Enter search text"}></input>
                 <button onClick={onButtonClick}>Search</button>
             </div>
 
-            <div>
-                {
-                    !props.totalRepositories ? undefined : <div>{
-                        pages.map((pageNum) => {
-                            return <span
-                                className={pageNum === props.currentPage ? s.currentPage : '' + ' ' + s.pageNumber}
-                                onClick={(event) => {
-                                    props.onPageNumClick(pageNum)
-                                }}>{pageNum}</span>
-                        })
+            {
 
-                    }
-                        ... {totalPages}
-                    </div>
+                !props.repositories.length ? <div>No repositories found</div> : <div className={s.pagesContainer}>{
+                    pages.map((pageNum) => {
+                        return <span
+                            className={pageNum === props.currentPage ? s.currentPage : '' + ' ' + s.pageNumber}
+                            onClick={(event) => {
+                                props.onPageNumClick(pageNum)
+                            }}>{pageNum}</span>
+                    })
 
                 }
+                    ... {totalPages}
+                </div>
 
-            </div>
-
-            {
-                props.isFetching? <Preloader/> :
-                props.repositories.map(
-                    (repo) => {
-                        return <div>
-                            <span>Name: {repo.name}</span>
-                            <span>Stars: {repo.stargazers_count}</span>
-                            <span>Last update: {repo.updated_at}</span>
-                            <span>Link: {repo.html_url}</span>
-                        </div>
-                    }
-                )
             }
+
+            <div className={s.repoContainer}>
+                {
+
+                    props.isFetching ? <Preloader/> :
+                        props.repositories.map(
+                            (repo) => {
+                                return (<NavLink to={"/repository/" + repo.id}>
+                                    <div className={s.repo}>
+                                        <span>Name: {repo.name}</span>
+                                        <span>Stars: {repo.stargazers_count}</span>
+                                        <span>Last update: {repo.updated_at}</span>
+                                        <span>Link: {repo.html_url}</span>
+                                    </div>
+                                </NavLink>)
+                            }
+                        )
+                }
+            </div>
         </div>
     )
 }

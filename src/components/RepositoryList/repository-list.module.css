@@ -1,6 +1,9 @@
 .preloader{
-    width: 70px;
-    height: 70px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pageNumber{
@@ -8,8 +11,70 @@
     padding: 5px;
     margin: 5px;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .currentPage{
     font-weight: bold;
+}
+
+
+.componentContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    /*margin-top: 5px;*/
+    margin: 0 auto;
+
+}
+
+.repoContainer{
+    /*padding: 20px;*/
+    margin-top: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+
+
+}
+.repo{
+    border: black solid 1px;
+    padding: 10px;
+    margin: 15px 5px;
+}
+.repo > * {
+    margin-left: 10px;
+}
+.repo:hover{
+    background-color: lightslategrey;
+    color: white;
+    cursor: pointer;
+}
+
+.searchContainer{
+    background-color: lightslategrey;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+.searchContainer input{
+    margin-right: 10px;
+    width: 50%
+}
+
+.pagesContainer{
+    margin-top: 5px;
 }

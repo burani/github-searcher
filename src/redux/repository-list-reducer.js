@@ -79,7 +79,6 @@ export const getRepositories = (pageSize, currentPage, searchText) => {
         dispatch(setFetching(true));
         dispatch(setCurrentPage(currentPage));
         repositoryApi.getRepositories(pageSize, currentPage, changeSearchText(searchText)).then(response => {
-            debugger;
             dispatch(setFetching(false));
             dispatch(setRepositories(response.items));
             dispatch(setTotalRepositories(response.total_count));
