@@ -69,7 +69,7 @@ const RepositoryCard = (props) => {
                         <div><b>Name: </b>{repository.name}</div>
                         <div><b>Description: </b>{repository.description}</div>
                         <div><b>Star count: </b>{repository.stargazers_count}</div>
-                        <div><b>Last updated at: </b>{repository.updated_at}</div>
+                        <div><b>Last updated at: </b>{repository.updated_at.replace('Z', '').replace('T', ' ')}</div>
                         <div><b>Languages: </b>{languages}</div>
                         <div><b>Contributors: </b>{contributors}</div>
                     </div>
