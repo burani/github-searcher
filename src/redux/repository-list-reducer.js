@@ -82,6 +82,8 @@ export const getRepositories = (pageSize, currentPage, searchText) => {
             dispatch(setFetching(false));
             dispatch(setRepositories(response.items));
             dispatch(setTotalRepositories(response.total_count));
+        }).catch((error) => {
+            alert("Error, could not get repositories");
         })
     }
 }

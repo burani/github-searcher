@@ -2,15 +2,11 @@ import React from "react";
 import s from "./repository-list.module.css";
 import Preloader from "./Preloader";
 import {NavLink} from "react-router-dom";
+import ReactPaginate from 'react-paginate';
 
 const RepositoryList = (props) => {
     let pages = [];
     let totalPages = Math.ceil(props.totalRepositories / props.pageSize);//рассчитываем количество страниц с репозиториями
-
-    //создаем массив для списка страниц.
-    for (let i = props.currentPage; i <= props.currentPage + 4; i++) {
-        pages.push(i);
-    }
 
     const onUpdateSearchText = (e) => {
         props.setSearchText(e.target.value);
@@ -21,10 +17,6 @@ const RepositoryList = (props) => {
 
     };
 
-
-    //в стейт надо добавить инпут, как-то надо брать из инпута значение когда мы кликаем на кнопку.
-
-    //в input при инициализации приходит пустой стейт, но он на самом деле сохраняется. Оставлю как фичу)))
     return (
         <div className={s.componentContainer}>
             <div className={s.searchContainer}>
@@ -32,22 +24,24 @@ const RepositoryList = (props) => {
                 <button onClick={onButtonClick}>Search</button>
             </div>
 
-            {
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                pageCount={totalPages}
+                onPageChange={(data) => {
+                    props.onPageNumClick(data.selected + 1);
+                }}
+                //forcePage={props.currentPage}
+                containerClassName={s.pagination}
+                marginPagesDisplayed={0}
+                pageRangeDisplayed={4}
+                subContainerClassName={s.pagination + "" + s.pages}
+                breakLabel={"..."}
+                disableInitialCallback={true}
+                activeClassName={s.active}
+                forcePage={props.currentPage - 1}
+            />
 
-                !props.repositories.length ? <div>No repositories found</div> : <div className={s.pagesContainer}>{
-                    pages.map((pageNum) => {
-                        return <span
-                            className={pageNum === props.currentPage ? s.currentPage : '' + ' ' + s.pageNumber}
-                            onClick={(event) => {
-                                props.onPageNumClick(pageNum)
-                            }}>{pageNum}</span>
-                    })
-
-                }
-                    ... {totalPages}
-                </div>
-
-            }
 
             <div className={s.repoContainer}>
                 {
@@ -55,12 +49,12 @@ const RepositoryList = (props) => {
                     props.isFetching ? <Preloader/> :
                         props.repositories.map(
                             (repo) => {
-                                return (<NavLink to={"/repository/" + repo.id}>
+                                return (<NavLink to={"/repository/" + repo.id} className={s.navlink}>
                                     <div className={s.repo}>
-                                        <span>Name: {repo.name}</span>
-                                        <span>Stars: {repo.stargazers_count}</span>
-                                        <span>Last update: {repo.updated_at}</span>
-                                        <span>Link: {repo.html_url}</span>
+                                        <span><b>Name: </b>{repo.name}</span>
+                                        <span><b>Stars: </b>{repo.stargazers_count}</span>
+                                        <span><b>Last update: </b>{repo.updated_at.replace('Z', '').replace('T', ' ')}</span>
+                                        <span><b>Link: </b><a href={repo.html_url}>{repo.html_url}</a></span>
                                     </div>
                                 </NavLink>)
                             }

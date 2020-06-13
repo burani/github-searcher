@@ -1,0 +1,64 @@
+.repositoryCardComponentContainer {
+    width: 70%;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: lightslategrey;
+
+}
+
+.repositoryCardContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: 30px;
+    flex-wrap: revert;
+    margin: 0 auto;
+}
+
+.image {
+    width: 150px;
+    height: 150px;
+}
+
+.repoCard {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+}
+
+.ownerCard {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+}
+
+h2 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.repositoryCardContainer a {
+    color: white;
+    text-decoration: none;
+}
+
+.repoCard {
+    padding: 5px;
+
+    margin: 0 auto;
+
+}
+
+.repoCard div {
+    margin-left: 10px;
+    word-break:break-all;
+}
+
+@media (max-width:800px)  {
+    .repositoryCardContainer{
+        flex-direction: column;
+    }
+}
