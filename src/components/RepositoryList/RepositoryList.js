@@ -3,6 +3,7 @@ import s from "./repository-list.module.css";
 import Preloader from "./Preloader";
 import {NavLink} from "react-router-dom";
 import ReactPaginate from 'react-paginate';
+import {DebounceInput} from "react-debounce-input";
 
 const RepositoryList = (props) => {
     let pages = [];
@@ -10,6 +11,8 @@ const RepositoryList = (props) => {
 
     const onUpdateSearchText = (e) => {
         props.setSearchText(e.target.value);
+
+        props.getRepositories(10, 1, e.target.value);
     };
     const onButtonClick = (e) => {
         props.setCurrentPage(1);
@@ -20,7 +23,11 @@ const RepositoryList = (props) => {
     return (
         <div className={s.componentContainer}>
             <div className={s.searchContainer}>
-                <input onChange={onUpdateSearchText} value={props.searchText} placeholder={"Enter search text"}></input>
+                {/*<input onChange={onUpdateSearchText} value={props.searchText} placeholder={"Enter search text"}></input>*/}
+
+                <DebounceInput onChange={onUpdateSearchText} value={props.searchText}
+                               placeholder={"Enter search text"} debounceTimeout={400}/>
+
                 <button onClick={onButtonClick}>Search</button>
             </div>
 
